@@ -5,6 +5,15 @@ const database = new Database()
 
 export const routes = [
     {
+        method: 'GET',
+        path: '/tasks',
+        handler: (req, res) => {
+            const tasks = database.select('tasks')
+
+            res.writeHead(200).end(JSON.stringify(tasks))
+        }
+    },
+    {
        method: 'POST',
        path: '/tasks',
        handler: (req, res) => {
