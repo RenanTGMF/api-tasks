@@ -67,4 +67,19 @@ export const routes = [
             return res.writeHead(204).end()
        }
     },
+    {
+       method: 'PATCH',
+       path: regexPath('/tasks/:id/complete'),
+       handler: (req, res) => {
+            const { id } = req.params
+
+            const updated = database.updateCompletionStatus('tasks', id)
+            
+            if (!updated) {
+                return res.writeHead(404).end(JSON.stringify({error: 'Task not found'})) 
+            }
+
+            return res.writeHead(204).end()
+       }
+    },
 ]

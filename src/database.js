@@ -58,6 +58,21 @@ export class Database {
         }
     }
 
+    updateCompletionStatus(table, id) {
+        const rowIndex = this.#database[table].findIndex(row => row.id === id)
+
+        if (rowIndex > -1) {
+            const {completed_at} = this.#database[table][rowIndex]
+
+            this.#database[table][rowIndex].completed_at = completed_at ? null : new Date().toISOString()
+            
+            this.#persist()
+            return true
+        } else{
+            return false
+        }
+    }
+
     delete(table, id) {
         const rowIndex = this.#database[table].findIndex(row => row.id === id)
 
