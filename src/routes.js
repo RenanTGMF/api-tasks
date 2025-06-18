@@ -41,8 +41,7 @@ export const routes = [
 
             const updated = database.update('tasks', id, {
                 title,
-                description,
-                'updated_at': new Date().toISOString(),
+                description
             })
 
             if (!updated) {
