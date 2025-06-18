@@ -29,7 +29,7 @@ export const routes = [
                 'updated_at': new Date().toISOString(),
             })
 
-            res.writeHead(201).end()
+            return res.writeHead(201).end()
        }
     },
     {
@@ -46,11 +46,25 @@ export const routes = [
             })
 
             if (!updated) {
-                res.writeHead(404).end(JSON.stringify({error: 'Task not found'}))
-                return
+                return res.writeHead(404).end(JSON.stringify({error: 'Task not found'}))
             }
             
-            res.writeHead(204).end()
+            return res.writeHead(204).end()
        }
-    }
+    },
+    {
+       method: 'DELETE',
+       path: regexPath('/tasks/:id'),
+       handler: (req, res) => {
+            const { id } = req.params
+
+            const deleted = database.delete('tasks', id)
+            
+            if (!deleted) {
+                return res.writeHead(404).end(JSON.stringify({error: 'Task not found'})) 
+            }
+
+            return res.writeHead(204).end()
+       }
+    },
 ]
