@@ -35,4 +35,26 @@ export class Database {
 
         return data
     }
+
+    update(table, id, data) {
+        const rowIndex = this.#database[table].findIndex(row => row.id === id)
+
+        if (rowIndex > -1) {
+            const {title, description, updated_at} = data
+            const {created_at, completed_at} = this.#database[table][rowIndex]
+
+            this.#database[table][rowIndex] = {
+                id,
+                title,
+                description,
+                completed_at,
+                created_at,
+                updated_at
+            }
+            this.#persist()
+            return true
+        } else {
+            return false
+        }
+    }
 }
